@@ -31,8 +31,8 @@ def reducer():
     for dictionary_term in dictionary_terms:
         dictionary_term.doc_frequency = len(dictionary_term.posting_list)
 
-    sorted_dictionary = sorted(dictionary_terms, key=attrgetter('doc_frequency'))
-    final_dictionary = sorted_dictionary[51:]
+    sorted_dictionary = sorted(dictionary_terms, key=attrgetter('collection_frequency'))
+    final_dictionary = sorted_dictionary[:-50]
     final_dictionary = sorted(final_dictionary, key=attrgetter('content'))
 
     for dictionary_term in final_dictionary:
