@@ -17,7 +17,11 @@ def mapper():
             doc_raw_tokens = tokenizer.tokenize(doc_content)
             doc_tokens = linguistic.normalize(doc_raw_tokens)
             doc_tokens = linguistic.stemmer(doc_tokens)
+            token_position = 0
             for token in doc_tokens:
+                info = doc_info.stringify()
+                info += " " + str(token_position)
+                token_position += 1
                 print(f"{token}\t{doc_info.stringify()}")
         except json.JSONDecodeError:
             continue
