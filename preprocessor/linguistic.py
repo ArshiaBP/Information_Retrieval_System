@@ -1,7 +1,7 @@
 from parsivar import FindStems
 
 
-def normalize_space(tokens):
+def normalize(tokens):
     normal_tokens = []
     for i in range(len(tokens)):
         if 0 < i < len(tokens) - 1:
@@ -38,6 +38,10 @@ def normalize_space(tokens):
         normal_tokens[i] = normal_tokens[i].translate(trans_table)
 
 
+def stemmer(tokens):
+    token_stemmer = FindStems()
+    for i in range(len(tokens)):
+        tokens[i] = token_stemmer.convert_to_stem(tokens[i]).split("&")[0]
 
 
 # semi_space = "‌"
