@@ -4,6 +4,9 @@ from models import document
 from models import term
 
 
+dictionary = []
+
+
 def reducer():
     pairs_list = []
     for line in sys.stdin:
@@ -34,6 +37,11 @@ def reducer():
     sorted_dictionary = sorted(dictionary_terms, key=attrgetter('collection_frequency'))
     final_dictionary = sorted_dictionary[:-50]
     final_dictionary = sorted(final_dictionary, key=attrgetter('content'))
+    global dictionary
+    dictionary = final_dictionary
 
     for dictionary_term in final_dictionary:
         print(dictionary_term.stringify())
+
+
+reducer()
