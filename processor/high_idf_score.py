@@ -3,8 +3,9 @@ import math
 import inverter
 
 
-def choose_high_idf(query: str):
+def choose_high_idf(query_string: str):
     query_terms_tuple = []
+    query = query_string.split()
     for term in query:
         index = bisect.bisect_left(inverter.dictionary, term, key=lambda x: x.content)
         if inverter.dictionary[index].content != term:
@@ -28,7 +29,7 @@ def choose_high_idf(query: str):
 
 
 # lnc-ltc
-def calculate_cosine(index_counts):
+def calculate_cosine_high_idf(index_counts):
     n = 10000
     k = 20
     scores = [0.0] * n
@@ -38,10 +39,10 @@ def calculate_cosine(index_counts):
         w_q = (1 + math.log(count, 10)) * (math.log(n / inverter.dictionary[index].doc_frequency, 10))
         for posting in inverter.dictionary[index].posting_list:
             w_d = (1 + math.log(posting.term_frequency, 10))
-            scores[posting.doc_id] += w_d * w_q
-            length[posting.doc_id] += w_d * w_d
-            if doc_info[posting.doc_id] == ("", ""):
-                doc_info[posting.doc_id] = (posting.doc_title, posting.doc_url)
+            scores[int(posting.doc_id)] += w_d * w_q
+            length[int(posting.doc_id)] += w_d * w_d
+            if doc_info[int(posting.doc_id)] == ("", ""):
+                doc_info[int(posting.doc_id)] = (posting.doc_title, posting.doc_url)
     for i in range(n):
         if length[i] != 0:
             length[i] = math.sqrt(length[i])

@@ -6,12 +6,13 @@ class Term:
         self.content = content
         self.collection_frequency = 0
         self.doc_frequency = 0
+        self.champion_list = []
         self.posting_list = []
 
     def add_collection_frequency(self):
         self.collection_frequency += 1
 
-    def add_new_posting(self, doc: models.document.Document):
+    def update_posting(self, doc: models.document.Document):
         exist = False
         index = 0
         for posting in self.posting_list:

@@ -20,19 +20,18 @@ def reducer():
         doc = document.Document()
         doc.parse_string(pair[1].strip("\n"))
         if pair[0] == current_term:
-            dictionary_term = dictionary_terms[current_term_id]
-            dictionary_term.add_collection_frequency()
-            dictionary_term.add_new_posting(doc)
+            dictionary_terms[current_term_id].add_collection_frequency()
+            dictionary_terms[current_term_id].update_posting(doc)
         else:
             current_term = pair[0]
             dictionary_term = term.Term(pair[0])
             dictionary_term.add_collection_frequency()
-            dictionary_term.add_new_posting(doc)
+            dictionary_term.update_posting(doc)
             dictionary_terms.append(dictionary_term)
             current_term_id = len(dictionary_terms) - 1
 
-    for dictionary_term in dictionary_terms:
-        dictionary_term.doc_frequency = len(dictionary_term.posting_list)
+    for index, dictionary_term in enumerate(dictionary_terms):
+        dictionary_terms[index].doc_frequency = len(dictionary_term.posting_list)
 
     sorted_dictionary = sorted(dictionary_terms, key=attrgetter('collection_frequency'))
     final_dictionary = sorted_dictionary[:-50]
