@@ -1,15 +1,30 @@
-import sys
+import json
 from operator import attrgetter
 from models import document
 from models import term
+from preprocessor import tokenizer
+from preprocessor import linguistic
 
 
-def reducer():
+def create_index():
+    collection = json.load(open("data/IR_data_news_5k.json", "r", encoding="cp1256"))
     pairs_list = []
-    with open('data/intermediate.txt', 'r', encoding='utf-8') as file:
-        for line in file:
-            pair = line.split('\t')
+    for doc_id, doc_value in collection.items():
+        doc_title = doc_value.get('title', '')
+        doc_url = doc_value.get('url', '')
+        doc_content = doc_value.get('content', '')
+        doc_info = document.Document(doc_id, doc_title, doc_url)
+        doc_raw_tokens = tokenizer.tokenize(doc_content)
+        doc_tokens = linguistic.normalize(doc_raw_tokens)
+        doc_tokens = linguistic.stemmer(doc_tokens)
+        token_position = 0
+        for token in doc_tokens:
+            info = doc_info.stringify()
+            info += "*" + str(token_position)
+            token_position += 1
+            pair = [token, info]
             pairs_list.append(pair)
+
     pairs_list = sorted(pairs_list, key=lambda x: (x[0], x[1]))
     dictionary_terms = []
     current_term = ""
@@ -42,4 +57,4 @@ def reducer():
             f.write(dictionary_term.stringify() + "\n")
 
 
-reducer()
+create_index()
