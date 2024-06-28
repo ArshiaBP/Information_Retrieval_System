@@ -14,6 +14,10 @@ def normalize(tokens):
                 elif tokens[i] == "ی" or tokens[i] == "ای" or tokens[i] == "ها" or tokens[i] == "های" or tokens[i] == "هایی" or tokens[i] == "تر" or tokens[i] == "تری" or tokens[i] == "ترین" or tokens[i] == "گر" or tokens[i] == "گری" or tokens[i] == "ام" or tokens[i] == "ات" or tokens[i] == "اش":
                     new_token = tokens[i - 1] + "‌" + tokens[i]
                     normal_tokens[len(normal_tokens) - 1] = new_token
+                elif tokens[i] == "com":
+                    if "@" in tokens[i - 1]:
+                        new_token = tokens[i - 1] + "." + tokens[i]
+                        normal_tokens[len(normal_tokens) - 1] = new_token
                 else:
                     normal_tokens.append(tokens[i])
             elif i == 0:
@@ -27,6 +31,10 @@ def normalize(tokens):
                 if tokens[i] == "ی" or tokens[i] == "ای" or tokens[i] == "ها" or tokens[i] == "های" or tokens[i] == "هایی" or tokens[i] == "تر" or tokens[i] == "تری" or tokens[i] == "ترین" or tokens[i] == "گر" or tokens[i] == "گری" or tokens[i] == "ام" or tokens[i] == "ات" or tokens[i] == "اش":
                     new_token = tokens[i - 1] + "‌" + tokens[i]
                     normal_tokens[len(normal_tokens) - 1] = new_token
+                elif tokens[i] == "com":
+                    if "@" in tokens[i - 1]:
+                        new_token = tokens[i - 1] + "." + tokens[i]
+                        normal_tokens[len(normal_tokens) - 1] = new_token
                 else:
                     normal_tokens.append(tokens[i])
 
