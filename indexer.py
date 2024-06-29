@@ -7,7 +7,7 @@ from preprocessor import linguistic
 
 
 def create_index():
-    collection = json.load(open("data/IR_data_news_5k.json", "r", encoding="cp1256"))
+    collection = json.load(open("data/IR_data_news_12k.json", "r", encoding="cp1256"))
     pairs_list = []
     for doc_id, doc_value in collection.items():
         doc_title = doc_value.get('title', '')
